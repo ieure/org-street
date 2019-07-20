@@ -1,3 +1,5 @@
+#+OPTIONS: toc:nil author:nil num:nil
+
 * Org Street
   :PROPERTIES:
   :ID:       f2d95e77-f7a8-4e89-b4f7-841143648797
@@ -12,3 +14,15 @@
 
   Having a =LOCATION= is helpful; if you export your Org Agenda to
   iCal files, the location becomes the address of the calendar entry.
+
+
+** Usage
+   :PROPERTIES:
+   :ID:       8f51a80e-a90f-4b00-8b3f-8ae0accf1ad7
+   :END:
+
+   Place point inside an Org entry, then run:
+
+   =M-x org-street-set-location RET=
+
+   Then enter some text and press =RET= again.

@@ -1,8 +1,49 @@
-;;; org-street.el --- sdfsodifj
+;;; org-street.el --- Physical addresses for Org   -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2019  Ian Eure
+
+;; Author: Ian Eure <public@lowbar.fyi>
+;; Version: 0.7.0
+;; URL: https://github.com/ieure/org-street
+;; Package-Requires: ((emacs "25") (nominatum "0.8.0"))
+;; Keywords:
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; 
+
+;; Org Street is an extension for Org Mode for turning the names of
+;; places into a `LOCATION' property containing their address.  Given
+;; some freeform text approximately describing a location, it geocodes it
+;; with OpenStreetMap’s Nominatum API to determine a canonical location.
+;; If Nominatum returns multiple locations, a list is displayed to choose
+;; from.
+;;
+;; Having a `LOCATION' is helpful; if you export your Org Agenda to iCal
+;; files, the location becomes the address of the calendar entry.
+;;
+;; Usage
+;; -----
+;;
+;; Place point inside an Org entry, then run:
+;;
+;; `M-x org-street-set-location RET'
+;;
+;; Then enter some text and press `RET' again.
+;;
+
+;;; Code:
 
 (require 'nominatim)
 
@@ -72,9 +113,10 @@
     (goto-char (point-min))
     (pop-to-buffer (current-buffer))))
 
+
  ;; User-serviceable parts
 
-(defun org-street-org-set-location (text)
+(defun org-street-set-location (text)
   "Set the LOCATION property of the current entry to the address of TEXT.
 
    Nominatum is used to look up TEXT.  If a single location is
@@ -82,19 +124,17 @@
    multiple locations are returned, a list is displayed to choose
    from."
   (interactive (list (read-string "Location: ")))
-  (let* ((matches (nominatim-geocode place))
+  (let* ((matches (nominatim-geocode text))
          (n (length matches)))
     (cond
      ;; No matches, error
-     ((= n 0) (error "No matches for `%s'" place))
+     ((= n 0) (error "No matches for `%s'" text))
 
      ;; One match, put it in.
      ((= n 1) (org-set-property "LOCATION" (org-street--address (aref matches 0))))
 
      ;; Multiple matches, prompt
-     (t (org-street--choose place (cons (current-buffer) (point)) matches)))))
-
-(provide 'org-street)
+     (t (org-street--choose text (cons (current-buffer) (point)) matches)))))
 
 (provide 'org-street)
 
