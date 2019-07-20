@@ -1,0 +1,11 @@
+* Org Street
+  :PROPERTIES:
+  :ID:       f2d95e77-f7a8-4e89-b4f7-841143648797
+  :END:
+
+  Org Street is an extension for Org Mode for turning the names of
+  places into a =LOCATION= property containing their address.  Given
+  some freeform text approximately describing a location, it geocodes
+  it with OpenStreetMap’s Nominatum API to determine a canonical
+  location.  If Nominatum returns multiple locations, a list is
+  displayed to choose from.
