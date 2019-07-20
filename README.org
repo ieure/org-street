@@ -9,3 +9,6 @@
   it with OpenStreetMap’s Nominatum API to determine a canonical
   location.  If Nominatum returns multiple locations, a list is
   displayed to choose from.
+
+  Having a =LOCATION= is helpful; if you export your Org Agenda to
+  iCal files, the location becomes the address of the calendar entry.
