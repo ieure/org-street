@@ -131,7 +131,7 @@
      ((= n 0) (error "No matches for `%s'" text))
 
      ;; One match, put it in.
-     ((= n 1) (org-set-property "LOCATION" (org-street--address (aref matches 0))))
+     ((= n 1) (org-set-property "LOCATION" (nominatim--printable->oneline (nominatim--printable (aref matches 0)))))
 
      ;; Multiple matches, prompt
      (t (org-street--choose text (cons (current-buffer) (point)) matches)))))
