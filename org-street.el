@@ -5,7 +5,7 @@
 ;; Author: Ian Eure <public@lowbar.fyi>
 ;; Version: 0.7.0
 ;; URL: https://github.com/ieure/org-street
-;; Package-Requires: ((emacs "25") (nominatum "0.8.0"))
+;; Package-Requires: ((emacs "25") (nominatim "0.9.3"))
 ;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -26,8 +26,8 @@
 ;; Org Street is an extension for Org Mode for turning the names of
 ;; places into a `LOCATION' property containing their address.  Given
 ;; some freeform text approximately describing a location, it geocodes it
-;; with OpenStreetMap’s Nominatum API to determine a canonical location.
-;; If Nominatum returns multiple locations, a list is displayed to choose
+;; with OpenStreetMap’s Nominatim API to determine a canonical location.
+;; If Nominatim returns multiple locations, a list is displayed to choose
 ;; from.
 ;;
 ;; Having a `LOCATION' is helpful; if you export your Org Agenda to iCal
@@ -90,8 +90,8 @@
            do
            (insert (format "* %s :%s:\n"
                            (thread-first loc
-                             (nominatum--printable)
-                             (nominatum--printable->oneline))
+                             (nominatim--printable)
+                             (nominatim--printable->oneline))
                            (cdr (assoc 'type loc))))))
 
 (defun org-street--choose (search-text target locations)
@@ -119,7 +119,7 @@
 (defun org-street-set-location (text)
   "Set the LOCATION property of the current entry to the address of TEXT.
 
-   Nominatum is used to look up TEXT.  If a single location is
+   Nominatim is used to look up TEXT.  If a single location is
    returned, its address is used for the LOCATION property.  If
    multiple locations are returned, a list is displayed to choose
    from."
