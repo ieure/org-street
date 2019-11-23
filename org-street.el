@@ -77,12 +77,16 @@
     (define-key kmap (kbd "<up>") 'org-previous-visible-heading)
     (define-key kmap "q" 'kill-buffer-and-window)
     (define-key kmap (kbd "RET") 'org-street-choose-select-location)
+    (define-key kmap (kbd "C-c C-c") 'org-street-choose-select-location)
     kmap)
   "Keymap for `org-street-choose' major mode.")
 
 (define-derived-mode org-street-choose-mode org-mode
   "Org Street Choose"
-  "Major mode to choose an Org Street result.")
+  "Major mode to choose an Org Street result.
+
+When `org-street-set-location' finds multiple results matching
+TEXT, this mode is used to let the user select the best one.")
 
 (defun org-street--insert-locations (locations)
   "Place LOCATIONS into the `org-street-choose' buffer."
